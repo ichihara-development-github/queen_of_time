@@ -1,0 +1,29 @@
+react-router-dom
+react-beautiful-dnd
+@mui
+calendar, interaction
+@fullcalendar/timegrid 
+dategrid
+npm i @mui-treasury/components
+i @react-google-maps/api
+npm install geolib
+react-datepicker
+react-time-picker
+npm i socket.io socket.io-client 
+npm install react-hook-form
+npm i socket.io socket.io-client 
+instal dotenv
+  "babelify": "^6.4.0",
+  "browserify": "^12.0.1",
+  "browserify-incremental": "^3.0.1",
+  "del": "^2.0.2",
+  "express": "^4.13.3",
+  "glob": "^5.0.15",
+  "gulp": "^3.9.0",
+  "gulp-babel": "^5.3.0",
+  "gulp-notify": "^2.2.0",
+  "react-websocket": "^1.0.0",
+  "reactify": "^1.1.1",
+  "redis": "0.8.x",
+  "vinyl-source-stream": "^1.1.0"
+ 
