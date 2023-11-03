@@ -59,9 +59,6 @@ io.on("connection", function(socket){
         socket.broadcast.to(`room_${roomId}`).emit("RECIEVE_MESSAGE", message)
         // io.to(`room_${message.room_id}`).emit("RECIEVE_MESSAGE", message)
     });
-
-
- 
     
     socket.on("CANCEL_MESSAGE",function(roomId,id){
         console.log("cancel send")

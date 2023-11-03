@@ -6,8 +6,6 @@ import { sendEmployeeParams } from '../apis/employees';
 export const imageUploder = (image, key, sb) => {
 
     // aws setting
-    
-
     AWS.config.update({
         accessKeyId: process.env.REACT_APP_S3_ACCESS_KEY_ID,
         secretAccessKey: process.env.REACT_APP_S3_SECRET_ACCESS_KEY
@@ -36,7 +34,6 @@ export const imageUploder = (image, key, sb) => {
             }
             sendProfile({image_url: key})
             sb.setSnackBar({open: true, variant:"success", content: "画像のアップロードが正常に行われました。"})
-            console.log("OK")
         })
         }
         catch(e){ throw e}
