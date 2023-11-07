@@ -39,7 +39,7 @@ const initialState = {
 
 const shiftTerms = [
   {id: "early",label:"朝",start:9,end:12,color:"orange"},
-  {id: "mid",label:"日勤",start:12,end:16,color:"greenyellow"},
+  {id: "mid",label:"日勤",start:12,end:16,color:"ivory"},
   {id: "late",label:"夜",start:16,end:20,color:"skyblue"}
 ]
 

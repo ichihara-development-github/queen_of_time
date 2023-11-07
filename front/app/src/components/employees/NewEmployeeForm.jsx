@@ -89,6 +89,7 @@ return (
     </label> 
     <input 
       {...register('imageUrl')}  
+      value={profile.image}
       type="hidden"  
       defaultValue={profile.profile && profile.profile.image}
     />
@@ -98,6 +99,7 @@ return (
         required
         disabled={!auth.state.chief && auth.state.loggedin}
         label="氏名"
+        defaultValue={profile && profile.name}
         className="mui-input"
         size="small"
         margin="normal"

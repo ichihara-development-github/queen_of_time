@@ -5,7 +5,6 @@ import { STYLE_2 } from "../../components/const"
 import { NewEmployeeForm } from "../../components/employees/NewEmployeeForm"
 import { SnackbarContext } from "../../contexts/snackBar";
 import { imageUploder } from "../../lib/imageUploader";
-import { v4 as uuid } from "uuid";
 
 export const Profile = () => {
 
@@ -13,17 +12,21 @@ export const Profile = () => {
     const sb = useContext(SnackbarContext);
     
     const sendParams = (params)=> {
+      console.log(params)
        
         try {
-            sendProfile(params)
+          if(params.image){
+            const imageUrl =  params.imageUrl || params.name + "_" +(new Date()).getTime();
+            imageUploder(params.image[0], imageUrl, sb)
+            params.image = imageUrl
+          }
+          sendProfile(params)
             .then(res=> {
               if(res.status !== 200){
+                sb.setSnackBar({open: true, variant:"error", content: "プロフィールを編集できませんでした"})
                 return
               }
-              sb.setSnackBar({open: true, variant:"success", content: "プロフィールを編集しました。"})
-              if(params.image){
-                const imageUrl = uuid() || params.imageUrl;
-                imageUploder(params.image[0], imageUrl, sb)}
+              sb.setSnackBar({open: true, variant:"success", content: "プロフィールを編集しました"})
               })
           }
           catch(e){console.log(e.message)}

@@ -2,10 +2,9 @@ module Api
     module V1
         class TimestampsController < ApplicationController
 
-            before_action :set_params, only: %i[new]
+            before_action :set_timestamp_params, only: %i[new]
           
             def index 
-                p @current_employee.timestamps.order(:date)
                 return  render json: {
                     attendances:  @current_employee.timestamps.order(:date)
                             }, status: :ok   
@@ -17,7 +16,9 @@ module Api
                             }, status: :ok   
             end
 
-            def new        
+            def new    
+                @at= @current_employee.timestamps.find_by(date: Date.today)&.attendance_time
+                @lv= @current_employee.timestamps.find_by(date: Date.today)&.leaving_time     
                 return  render json: {
                     positions: {
                         lat:  @organization.lat,
@@ -77,7 +78,7 @@ module Api
             end
        
 
-            def set_params
+            def set_timestamp_params
                 @at= @current_employee.timestamps.find_by(date: Date.today)&.attendance_time
                 @lv= @current_employee.timestamps.find_by(date: Date.today)&.leaving_time 
             end

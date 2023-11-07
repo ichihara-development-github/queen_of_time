@@ -33,7 +33,7 @@ const style= {
 }
 
 export const EmployeeTop = () => {
-    const [openState, setOpenState] = useState("shift");
+    const [openState, setOpenState] = useState("timestamp");
     
     const auth = useContext(AuthContext)
 

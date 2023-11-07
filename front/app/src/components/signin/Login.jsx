@@ -23,7 +23,12 @@ export const Login = () => {
       <>
       {auth.state.loggedIn ? (
           <>
-          <Grid sx={{p:4,maxWidth: 500,margin:"auto"}} container direction="column" alignItems="center">
+          <Grid 
+            sx={{p:4,maxWidth: 500,margin:"auto"}} 
+            container 
+            direction="column" 
+            alignItems="center"
+         >
           <Typography sx={{my:4}}component="div" variant="h5">
                 <Link to ={auth.state.chief ? "/Dashboard": "/employeeDashboard"}>
                   <Typography variant="h6">
@@ -43,20 +48,28 @@ export const Login = () => {
           </Grid>
           </>
         ) : (
+          <>
+          <Grid 
+            sx={{p:4,maxWidth: 500,margin:"auto"}} 
+            container
+            direction="column" 
+            alignItems="center"
+            spacing={2}
+          >
           <form  onSubmit={handleSubmit(auth.login)}>  
-          <Grid sx={{p:4,maxWidth: 500,margin:"auto"}} container direction="column" alignItems="center">
+          
           <Grid item>
-          <TextField  
-            
-            margin="normal" 
-            label="メールアドレス"
-            defaultValue="sample@user0.com"
-            {...register('email',{ required: "※空白にはできません"})} />
+            <TextField  
+              margin="normal" 
+              label="メールアドレス"
+              defaultValue="sample@user0.com"
+              {...register('email',{ required: "※空白にはできません"})}
+             />
           </Grid>
           <span style={{color: "red"}}>{errors.email && errors.email.message}</span>
           <Grid item>
             <TextField
-            margin="normal"
+                  margin="normal"
                   label="パスワード"
                   defaultValue="password"
                   {...register("password", {required:  "※空白にはできません"})}
@@ -78,23 +91,31 @@ export const Login = () => {
             }>
                 ログイン   
           </Button>
-          <Link to="/signup">
-            <Button 
-                variant="contained" 
-                color="primary"
-                fullWidth
-            >
-                新規登録
-            </Button>
-          </Link>
-      
           </Grid>
-      
-            </Grid>
-      
           </form>
+       
+        </Grid>
+        <div style={{textAlign: "center"}}>
+        <Link to="/signup">
+             <Button 
+                 variant="contained" 
+                 color="primary"
+                 fulWidth
+             >
+                 新規登録
+             </Button>
+          </Link>
+
+        </div>
+      
+          </>
+
+          
+     
+       
+     
         )}    
-         
+  
         
         </>
 

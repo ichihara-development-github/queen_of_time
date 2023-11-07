@@ -5,8 +5,14 @@ import { useForm } from 'react-hook-form';
 import { GoogleMap, Marker, LoadScript } from "@react-google-maps/api";
 import { createOrganization } from '../../apis/organization';
 import { AuthContext } from '../../contexts/auth';
+import { imageUploder } from '../../lib/imageUploader';
+import { SnackbarContext } from '../../contexts/snackBar';
+import { v4 as uuid } from "uuid";
+
 
 export const NewOrganizationForm = ({empParams,setStepIndex}) => {
+    
+    const sb = useContext(SnackbarContext)
 
     const geocoder = new window.google.maps.Geocoder();
     const [validate, setValidate] = useState(false);
@@ -14,8 +20,6 @@ export const NewOrganizationForm = ({empParams,setStepIndex}) => {
     const { register, handleSubmit, formState: { errors } } = useForm();
 
     const auth = useContext(AuthContext)
-
-
 
     const handleBlur = (e) => {
         geocoder.geocode({address: e.target.value},function(results, status){
@@ -26,7 +30,7 @@ export const NewOrganizationForm = ({empParams,setStepIndex}) => {
                     lat: position.lat(),
                     lng: position.lng()
                 })
-                // setValidate(true)
+                setValidate(true)
             }else{
                 alert("位置情報の取得ができませんでした。")
             }
@@ -36,22 +40,22 @@ export const NewOrganizationForm = ({empParams,setStepIndex}) => {
     
 
     const sendOrgPrams = (params) => {
-       
-       
+    
         const orgParams = {...params,lat: coords.lat, lng: coords.lng}
-        console.log(orgParams)
         createOrganization({
             organizations: orgParams,
             employees: empParams
         })
         .then((res) => {
-            console.log(empParams)
+            
             if(res.status == 200){
+                const imageUrl = empParams.name + (new Date()).getTime();
+                imageUploder(empParams.image[0], imageUrl, sb)
                 auth.login({
                     "email":empParams.email,
                     "password":empParams.password
                 })
-                // setStepIndex(2)
+                setStepIndex(2)
             }
     })
 }
@@ -59,7 +63,6 @@ export const NewOrganizationForm = ({empParams,setStepIndex}) => {
 
     return (
         <Box>
-           
             <form onSubmit={handleSubmit(sendOrgPrams)}>
                 <Stack 
                     spacing={1}
@@ -85,7 +88,6 @@ export const NewOrganizationForm = ({empParams,setStepIndex}) => {
                         required
                         onBlur={e => handleBlur(e)}
                     />
-                    {/* ?が使えない */}
                     <span style={{color: "red"}}>{errors.address && errors.address.message}</span>
                     <Box>
                         <Typography variant="subtitle1">
@@ -107,7 +109,7 @@ export const NewOrganizationForm = ({empParams,setStepIndex}) => {
                         variant="contained" 
                         color="success"
                         type="submit"
-                        // disabled={!validate}
+                        disabled={!validate}
                     >
                         作成
                     </Button>

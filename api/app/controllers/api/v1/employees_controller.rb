@@ -5,7 +5,6 @@ module Api
 
 
             def index
-                # @employees = @organization.employees.order(:name)
                 @employees = @organization.employees.order(:name)
                 render json: {employees: employee_statistic}, status: :ok
             end
@@ -56,7 +55,7 @@ module Api
             private
 
             def employee_params
-                params.require(:employees).permit(:name)
+                params.require(:employees).permit(:name, :image)
             end
 
             def profile_params

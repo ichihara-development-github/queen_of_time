@@ -1,10 +1,9 @@
+import { stepButtonClasses } from '@mui/material';
 import AWS from 'aws-sdk';
-import { sendProfile } from '../apis/config';
-import { sendEmployeeParams } from '../apis/employees';
 
 
 export const imageUploder = (image, key, sb) => {
-
+   
     // aws setting
     AWS.config.update({
         accessKeyId: process.env.REACT_APP_S3_ACCESS_KEY_ID,
@@ -17,7 +16,7 @@ export const imageUploder = (image, key, sb) => {
         region: process.env.REACT_APP_S3_BUCKET_REGION
     })
 
-    try {
+  
         const params = {
             Body: image,
             Bucket:  process.env.REACT_APP_S3_BUCKET,
@@ -25,16 +24,15 @@ export const imageUploder = (image, key, sb) => {
         }
         
         // setUpload(true)
+        
         bucket.putObject(params).promise()
-        .then(res => {
-            console.log(res.$response)
-            if(res.$response.httpResponse.statusCode !== 200){
-                sb.setSnackBar({open: true, variant:"error", content: "画像のアップロードに失敗しました。"})
-                return 
-            }
-            sendProfile({image_url: key})
-            sb.setSnackBar({open: true, variant:"success", content: "画像のアップロードが正常に行われました。"})
-        })
-        }
-        catch(e){ throw e}
-    }
+        .then(function(data) {
+            sb.setSnackBar({open: true, variant: "success", content: `プロフィール画像のアップロードに成功しました`})
+            return 
+          }).catch(function(err) {
+            sb.setSnackBar({open: true, variant: "error", content: `プロフィール画像のアップロードに失敗しました`})
+            console.log(err);
+            return 
+          });
+}
+    

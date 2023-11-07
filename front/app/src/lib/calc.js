@@ -30,7 +30,7 @@ const countToEvent = (shifts, time) => {
       const count = calcAssignCount(shifts[key], time);
 
       return {
-        title:`☀︎${count.early}☀︎${count.mid}☾${count.late}`,
+        title:`朝:${count.early} 日:${count.mid} 夜:${count.late}`,
         start: key,
         color: "gray"
       }

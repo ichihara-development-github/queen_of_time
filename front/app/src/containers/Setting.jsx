@@ -132,7 +132,7 @@ export const Setting = () => {
 
         <Divider sx={{my:1}} />
 
-      <Typography variant="h6">チャット</Typography>
+      {/* <Typography variant="h6">チャット</Typography>
       <Stack
           direction="row" 
           spacing={2} 
@@ -154,7 +154,7 @@ export const Setting = () => {
           </Tooltip>
        
         </Stack>
-     
+      */}
         
         <Divider sx={{my:1}} />
 

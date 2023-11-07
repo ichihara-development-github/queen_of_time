@@ -25,7 +25,6 @@ class ApplicationController < ActionController::API
       end
     
       def logged_in?
-        p @current_employee
         return render json: {}, status: :forbidden unless @current_employee
       end
 

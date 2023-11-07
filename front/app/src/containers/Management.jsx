@@ -133,7 +133,7 @@ const handlePush = (message) => {
             <ListItemText primary="チャット" />
           </ListItem>
           </Link>
-       
+{/*        
           <ListItem button key="notification"  onClick={()=>{setOpenState("notification")}}>
             <ListItemIcon>
             <Badge color="error" badgeContent={badge.badge.notification}>
@@ -141,7 +141,7 @@ const handlePush = (message) => {
             </Badge>
             </ListItemIcon>
             <ListItemText primary="通知" />
-          </ListItem>
+          </ListItem> */}
         
        
           <ListItem button key="shift" onClick={()=>{setOpenState("shift")}}>

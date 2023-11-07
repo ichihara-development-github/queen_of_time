@@ -32,7 +32,7 @@ import { convertLength } from '@mui/material/styles/cssUtils';
 import { useTextFilter } from '../customeHooks/hooks';
 import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
 import SearchIcon from '@mui/icons-material/Search';
-import { REQUEST_STATUS } from '../components/const';
+import { imageSrc, REQUEST_STATUS } from '../components/const';
 
 const welcomeStyle = {
   position: 'absolute',
@@ -60,10 +60,11 @@ const [openSearch, setOpenSearch] = useState(false)
 
 const [notice, setNotice] = useState({open: false, content: ""});
 const [tempId, setTempid] = useState();
-const [text, setText] = useState("");
 const auth = useContext(AuthContext);
 
 const history = useHistory();
+
+const [text, setText] = useState("")
 
 const filtered = useTextFilter(state.messageList,"content",text)
 const messageList = filtered.length > 0? filtered : state.messageList
@@ -71,7 +72,6 @@ const messageList = filtered.length > 0? filtered : state.messageList
 const DOMAIN = process.env.NODE_ENV == "production" ? "https://web.queen-of-time.com": "http://localhost"
 const SERVER = `${DOMAIN}:5500`; // WebSocket通信のサーバURL
 
-  
   const cancelSend = (roomId, id) => {
 
     if(window.confirm("メッセージの送信を取り消しますか？")){
@@ -92,16 +92,21 @@ const SERVER = `${DOMAIN}:5500`; // WebSocket通信のサーバURL
 
 
   const handleSelect = (id) => {
-    // dispatch({type: "FETCHING"})
+    dispatch({type: "FETCHING"})
     fetchMessages(id)
     .then((res) => {
       socket.emit("leave", selected.id)
       setSelected({id: id, name: res.data.companion,avatar: res.data.avatar})
       socket.emit("join", id)
       dispatch({
-        type: "FETCH_END", 
-        payload: res.data.messages})
+        type: "FETCH_END",
+        payload: res.data.messages
+      })
+      setText()
+      
     })
+   
+  
   }
  
 
@@ -112,6 +117,7 @@ const SERVER = `${DOMAIN}:5500`; // WebSocket通信のサーバURL
   const handleSearch = (e) => {
     e.preventDefault()
     if(filtered.length == 0){alert("結果が見つかりませんでした")}
+
       // socket.emit("leave", selected.id)
       // socket.emit("join", selected.id)
   }
@@ -120,7 +126,6 @@ const SERVER = `${DOMAIN}:5500`; // WebSocket通信のサーバURL
     
     createMessage(id, content)
     .then(res => {
-      console.log(res)
       if(res.status !== 201){return}
       // joinedSocket.emit("SEND_PUSH", res.data.message);
       socket.emit("SEND_MESSAGE", selected.id, res.data.message);
@@ -141,8 +146,6 @@ const SERVER = `${DOMAIN}:5500`; // WebSocket通信のサーバURL
       console.log('Chat : useEffect()');
       socket.on('connection', () => {
           console.log('start connection. socket.id=' + socket.id);
-      
-          
       });
 
         
@@ -161,9 +164,7 @@ const SERVER = `${DOMAIN}:5500`; // WebSocket通信のサーバURL
       type: "REMOVE",
       id: id
     })
-  })
-
-      
+  }) 
 
   })();
 
@@ -210,14 +211,17 @@ return (
            </IconButton>   
           </div> 
         </Stack>
-        <form onSubmit={(e)=>handleSearch(e)}>
+        <form onSubmit={(e)=>{
+          handleSearch(e)
+        }}>
         <TextField 
           sx={{my:2,display: openSearch ? "": "none"}}
           style={{backgroundColor: "white"}}
           variant="standard"
           fullWidth
           placeholder="検索"
-          onChange={(e)=> setText(e.target.value)}
+          name="text"
+          onChange={(e) => setText(e.target.value)}
           />
         </form>
         
@@ -258,7 +262,7 @@ return (
                 
             </Badge>
           <Avatar
-            src={room.image || MainImage}
+            src={imageSrc(room) || MainImage}
             alt={room.name}
           />
         

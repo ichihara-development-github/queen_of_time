@@ -27,6 +27,7 @@ module Api
             
                @current_employee.rooms.map{|r|
                companion = r.companion(@current_employee)
+               p companion
                read = r.messages.where(read: nil).where.not(employee_id: @current_employee.id).count
                 {
                     id: r.id,

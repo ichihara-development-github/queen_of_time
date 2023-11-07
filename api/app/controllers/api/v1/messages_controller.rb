@@ -5,7 +5,7 @@ module Api
             before_action :set_room, only: %i[index create]
 
             def index
-                messages = @room.messages.order(date: :ASC)
+                messages = @room.messages.order(send_date: :ASC) 
                 messages.where.not(employee_id: @current_employee.id).update(read: true)
                 render json: {
                     companion: @room.companion(@current_employee).name,
@@ -19,7 +19,7 @@ module Api
                 message = @room.messages.create(
                     employee_id: @current_employee.id,
                     content: params[:messages],
-                    date: Time.zone.today())
+                    send_date: Time.zone.today())
 
                 notice_param = {
                     name: @current_employee.name,

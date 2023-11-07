@@ -53,8 +53,9 @@ export const TimeStamp = () =>{
         return false
       } 
 
-
       useEffect(() => {
+        
+console.log("render")
         getTimestampStandby()
         .then(res => {
         setPosition(res.data.positions)

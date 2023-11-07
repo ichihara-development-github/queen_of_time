@@ -30,10 +30,9 @@ ActiveRecord::Schema.define(version: 2023_10_08_225724) do
     t.integer "open", default: 9, null: false
     t.integer "close", default: 18, null: false
     t.integer "min_work_time", default: 1
-    t.date "submittable_start", default: "2023-10-29", null: false
-    t.date "submittable_end", default: "2023-11-05", null: false
+    t.date "submittable_start", default: "2023-11-07", null: false
+    t.date "submittable_end", default: "2023-11-14", null: false
     t.integer "stampable_distance", default: 80
-    t.boolean "chat_notice", default: true
     t.string "red", default: "商談"
     t.string "royalblue", default: "面接"
     t.string "green", default: "会議"

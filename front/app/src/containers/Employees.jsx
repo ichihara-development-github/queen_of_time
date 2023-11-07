@@ -75,6 +75,7 @@ const handleDelete = () => {
     .then(res => {
       if(res.status !== 200){
         return}
+      setSelected(null)
       dispatch({
         type: "FETCH_END", 
         payload: list.filter(l => l.id !== selected.id)
@@ -94,11 +95,10 @@ const ShowImageList = () => (
      
         <ButtonBase key={index}>
         <ImageListItem onClick={()=>setSelected(elm)}>
-      <img
-        src={imageSrc(elm)}
-        alt={index}
-        loading="lazy"
-      />
+        <Avatar 
+            style={{width: 100,height:100}}
+            src={imageSrc(elm)}
+          />
       <ImageListItemBar
         title={elm.name}
       />

@@ -1,10 +1,29 @@
-import { Checkbox, FormControl, IconButton, InputLabel, MenuItem, Select, Stack, TextField } from "@mui/material";
+import { Checkbox, FormControl, IconButton, InputLabel, MenuItem, Modal, Select, Stack, TextField, Typography } from "@mui/material";
 import React,{ useMemo, useState} from "react";
 import NotInterestedOutlinedIcon from '@mui/icons-material/NotInterestedOutlined';
 import InsertCommentOutlinedIcon from '@mui/icons-material/InsertCommentOutlined';
 import { getMonAndDate } from "../../lib/calcDate";
 import { DefaultModal } from "../shared/DefaultModal";
 import { dayOfWeek } from "../const";
+import { Box } from "@mui/system";
+
+
+const style = {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    height: "200px",
+    width: 500,
+    maxWidth: "95%",
+    overflow: "scroll",
+    bgcolor: 'white',
+    border: '2px solid #000',
+    boxShadow: 24,
+    p: 2,
+  };
+  
+
 
 export const SubmitFeed = ({
     elm,
@@ -22,11 +41,9 @@ export const SubmitFeed = ({
         
     
     const handleChange = (e) => {
-        console.log(list)
         const value = e.target.value;
         setThisDate({...thisDate,[e.target.name]: value})
         setList(copy)
-        console.log(list)
     }
 
     const handleRest = (e) => {
@@ -45,7 +62,6 @@ export const SubmitFeed = ({
             label="出勤"
             value={thisDate.attendance_time}
             onChange={(e)=> handleChange(e)}
-          
         >
             {  
                 times.map((time,index) => (
@@ -81,13 +97,14 @@ export const SubmitFeed = ({
 
     const content = (
         <>
+        <Typography variant="h6">備考</Typography>
         <TextField
             fullWidth
             name="comment"
             multiline
             rows={3}
             value={comment}
-            defaultValue="備考"
+            placeHolder="備考"
             onChange={(e)=>setComment(e.target.value)}
             onBlur={()=>{thisDate.comment=comment}}
         />
@@ -120,15 +137,19 @@ return useMemo(() => {
                     />}
             onChange={(e)=> {handleRest(e)}}
             />
-             <IconButton onClick={()=> setOpen(true)}>
+             <IconButton onClick={()=> {console.log("open")
+             setOpen(true)}}>
                  <InsertCommentOutlinedIcon color={thisDate.comment&&"primary"} />
             </IconButton>
-        </Stack>    
-        <DefaultModal
+        </Stack>   
+        <Modal
             open={open} 
-            setOpen={setOpen} 
-            content={content}
-        />
+            onClose={()=>setOpen(false)} 
+        >
+            <Box sx={style}>
+                {content}
+            </Box>
+        </Modal>
        
     </div>  
 
@@ -137,7 +158,7 @@ return useMemo(() => {
 
     )
 
-},[thisDate])
+},[thisDate, open])
    
 } 
  

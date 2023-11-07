@@ -4,6 +4,7 @@ module Api
 
             def profile_setting
                 render json: {
+                    name: @current_employee.name,
                     profile: @current_employee.profile,
                     image: @current_employee.image
                     }, status: :ok
@@ -14,8 +15,8 @@ module Api
                     profile_params
                 )
                 @current_employee.update(
-                    image: params[:profile][:image_url]
-                ) if params[:profile][:image_url]
+                    image: params[:profile][:image]
+                ) if params[:profile][:image]
                 render json: {}, status: :ok
             end
 

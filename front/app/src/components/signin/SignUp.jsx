@@ -4,7 +4,7 @@ import { Box, TextField, Step, StepLabel, Stepper, Stack, Button, Typography } f
 import React from "react"
 import { REQUEST_STATUS } from '../const';
 import { NewOrganizationForm } from './OrganizationForm';
-
+import { Link } from 'react-router-dom/cjs/react-router-dom.min';
 
 const steps = [
     '責任者アカウント作成',
@@ -21,15 +21,15 @@ export const SignUp = () => {
         setStepIndex(1)
     }
 
-
-
     const stepComponents = [ 
         <NewEmployeeForm 
             sendParams={sendEmployeeParams}
             requestStatus={REQUEST_STATUS.OK}
-             />,
-        <NewOrganizationForm empParams={empParams} setStepIndex={setStepIndex}/>,
-        <NewEmployeeForm/>]
+        />,
+        <NewOrganizationForm 
+          empParams={empParams} 
+          setStepIndex={setStepIndex}
+        />,]
       
     return (
         <Box  sx={{width: "90%",maxWidth:500, margin:"32px auto"}}>
@@ -48,6 +48,18 @@ export const SignUp = () => {
           ))}
           </Stepper>
         {stepComponents[stepIndex]}
+
+        <Link to="/login">
+        <Button 
+            color="primary" 
+            variant="contained" 
+            size="large"
+            fullWidth
+            >
+                登録済みの方はこちら
+          </Button>
+
+        </Link>
       
         </Box>
         

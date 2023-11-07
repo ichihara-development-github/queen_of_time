@@ -18,7 +18,6 @@ import { createRoom } from '../apis/room';
 import { Box, IconButton, Modal, Step, StepLabel, Stepper, TextField } from '@mui/material';
 import { assignShift } from '../apis/shifts';
 import { imageUploder } from '../lib/imageUploader';
-import { v4 as uuid } from "uuid";
 
 const steps = [
   '従業員登録',
@@ -53,8 +52,16 @@ export const NewEmployeeModal = ({state, dispatch}) =>{
   const sb = useContext(SnackbarContext);
  
     const sendParams = (params) => {
-      const imageUrl = uuid();
       try {
+        if(params.image){
+          const imageUrl = params.name + "_" +(new Date()).getTime();
+          if(!imageUploder(params.image[0], imageUrl, sb)){
+            sb.setSnackBar({open: true, variant:"error", content: "プロフィール画像のアップロードに失敗しました"})
+            // return
+          }
+          params.image =imageUrl
+        
+        }
         sendEmployeeParams(params)
         .then(res=> {
           if(res.status !== 201){
@@ -65,15 +72,14 @@ export const NewEmployeeModal = ({state, dispatch}) =>{
               case 500:
                 sb.setSnackBar({open: true, variant:"error",content:"システムエラーが発生しました"})
                 break
-
             }
             return
           }
+
           dispatch({
             type: "FETCH_END",
             payload:res.data.employees
           })
-          imageUploder(params.image[0], imageUrl, sb)
           sb.setSnackBar({open: true, variant:"success", content: "従業員を作成しました"})
           setStepIndex(stepIndex + 1)
       })
@@ -136,6 +142,9 @@ export const NewEmployeeModal = ({state, dispatch}) =>{
       loading={loading}
     />
     </Box>
+    <Button 
+    fullWidth
+    onClick={()=>{setStepIndex(stepIndex + 1)}}>スキップ</Button>
   </Box>
   )
 

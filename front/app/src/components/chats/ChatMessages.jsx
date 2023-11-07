@@ -18,9 +18,9 @@ export const ChatMessages = ({
     cancelSend ,
     tempId,
 }) => {
+
     let date = new Date().toString()
     let currentDate = new Date(0)
-    
     
    return (
         <Box  
@@ -43,8 +43,7 @@ export const ChatMessages = ({
                     date = ""
                 }
                 
-                // console.log(new Date(new Date(message.created_at).getFullYear(),new Date(message.created_at).getMonth(),new Date(message.created_at).getDate()) )
-                // console.log(date)
+               
                 return (
                 <div key={index}>
                 <h5 style={timeStyle}>

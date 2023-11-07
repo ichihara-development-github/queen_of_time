@@ -2,7 +2,6 @@ import { useEffect, useState, useContext } from "react"
 import { ConfigContext } from "../contexts/config";
 
 
-
 const useTextFilter = (state,param,text) => {
 
 const [filtered, setFiltered] = useState([]);
@@ -14,7 +13,6 @@ const [filtered, setFiltered] = useState([]);
     });
     setFiltered(newList); 
   }, [text]);
-  
     return filtered;
 }
 

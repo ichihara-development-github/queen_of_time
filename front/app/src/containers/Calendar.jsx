@@ -104,7 +104,7 @@ useEffect(() => {
       <div>
         <FormLabel >表示項目</FormLabel>
         <Stack direction="row" alignItems="center">
-           {console.log(shift)}
+         
               <CalendarEventTypes
                handleChange={handleEventFilter}
               />
